@@ -53,8 +53,8 @@
     #tutorialBox { background:#fff; width:100%; max-width:600px; border-radius:20px; overflow:hidden; position:relative; }
     body.dark #tutorialBox { background:#2a2a2a; color: white; }
     .close-modal { position:absolute; right:15px; top:10px; cursor:pointer; font-size:24px; z-index:10;}
-    .video-container { position:relative; padding-bottom:56.25%; height:0; }
-    .video-container video { position:absolute; top:0; left:0; width:100%; height:100%; border:none; background: #000; }
+    .video-container { position:relative; padding-bottom:56.25%; height:0; background: #000; }
+    .video-container video { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
   </style>
 </head>
 
@@ -101,17 +101,19 @@
 
   <div id="versionPanel">v2.2.1</div> 
 
-  <div class="video-container">
-  <video id="tutorialVideo" controls playsinline preload="metadata" poster="images/tutorial-placeholder.jpg">
-    <source src="videos/tutorial.mp4" type="video/mp4">
-    <source src="videos/copy_D1A6D274-8E5F-4A80-B1B5-B1C85BBC90D2.mov" type="video/quicktime">
-    
-    <p>Your browser does not support the video tag. 
-       <a href="videos/tutorial.mp4" style="color: #4CAF50;">Download video instead</a>.
-    </p>
-  </video>
-</div>
-  
+  <div id="tutorialOverlay" onclick="handleOverlayClick(event)">
+    <div id="tutorialBox">
+      <span class="close-modal" onclick="closeTutorial()">×</span>
+      <div class="video-container" id="vidContainer">
+        <video id="tutorialVideo" controls playsinline preload="metadata" poster="images/tutorial-placeholder.jpg">
+          <source src="videos/tutorial.mp4" type="video/mp4">
+          <source src="videos/copy_D1A6D274-8E5F-4A80-B1B5-B1C85BBC90D2.mov" type="video/quicktime">
+          <p>Your browser does not support the video tag.</p>
+        </video>
+      </div>
+    </div>
+  </div>
+
   <script>
     let materialCount = 0;
 
@@ -123,7 +125,8 @@
         addMaterial: "+ เพิ่มวัตถุดิบ", deleteBtn: "ลบ", labor: "ค่าแรงรวม", other: "ค่าน้ำ + ค่าไฟ",
         material: "วัตถุดิบรวม", total: "ต้นทุนรวม", profitText: "กำไรรวม", sale: "ราคาขายรวม",
         calc: "คำนวณ", reset: "รีเซ็ต", darkMode: "โหมดมืด", lightMode: "โหมดสว่าง", autoMode: "ตามระบบ",
-        symbol: "฿", symbolBefore: false, empty: "กรุณาใส่ข้อมูลเพื่อคำนวณ"
+        symbol: "฿", symbolBefore: false, empty: "กรุณาใส่ข้อมูลเพื่อคำนวณ",
+        vidErr: "ไม่พบไฟล์วิดีโอคู่มือ กรุณาตรวจสอบการเชื่อมต่อ"
       },
       en: {
         title: "Cost Calculator", materials: "Materials", laborSection: "Labor & Expenses",
@@ -132,7 +135,8 @@
         addMaterial: "+ Add material", deleteBtn: "Delete", labor: "Labor cost", other: "Water + Elec",
         material: "Materials", total: "Total cost", profitText: "Profit", sale: "Selling price",
         calc: "Calculate", reset: "Reset", darkMode: "Dark Mode", lightMode: "Light Mode", autoMode: "Auto",
-        symbol: "$", symbolBefore: true, empty: "Please enter data"
+        symbol: "$", symbolBefore: true, empty: "Please enter data",
+        vidErr: "Tutorial video not found. Please check your connection."
       }
     };
 
@@ -308,7 +312,7 @@
     function closeTutorial() {
       document.getElementById("tutorialOverlay").style.display = "none";
       const video = document.getElementById("tutorialVideo");
-      video.pause();
+      if (video) video.pause();
     }
 
     function handleOverlayClick(e) {
@@ -316,6 +320,17 @@
         closeTutorial();
       }
     }
+
+    // Video Error Handling Fix
+    document.getElementById('tutorialVideo').addEventListener('error', function(e) {
+      const container = document.getElementById('vidContainer');
+      const lang = document.getElementById("langSelect").value;
+      container.innerHTML = `
+        <div style="padding: 40px; text-align: center; color: #ff6b6b; font-weight: bold;">
+          ⚠️ ${texts[lang].vidErr}
+        </div>
+      `;
+    }, true);
 
     window.onload = () => { loadData(); updateThemeButton(); calculate(); };
   </script>
