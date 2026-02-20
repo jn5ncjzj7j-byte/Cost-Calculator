@@ -1,6 +1,6 @@
 {
   "name": "Cost Calculator",
-  "short_name": "CostCalc",
+  "short_name": "Cost Calculator",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
