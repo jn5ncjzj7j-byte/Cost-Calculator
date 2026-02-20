@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title id="pageTitle">Cost Calculator</title> 
 
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-512.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4CAF50">
   <style>
     :root {
       --primary: #4CAF50;
@@ -34,6 +38,15 @@
       transition: background 0.4s ease;
     }
     body.dark .container { background: var(--card-dark); border-color: rgba(255,255,255,0.05); }
+
+    /* Logo Styling */
+    .header-logo {
+      width: 60px;
+      height: 60px;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 12px;
+    }
 
     @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideOut { from { opacity: 1; transform: scale(1); max-height: 100px; } to { opacity: 0; transform: scale(0.9); max-height: 0; padding: 0; margin: 0; overflow: hidden; } }
@@ -109,6 +122,7 @@
       <button id="themeBtn" onclick="toggleDarkMode()"></button>
     </div>
 
+    <img src="icon-192.png" alt="Logo" class="header-logo">
     <h2 id="title" style="text-align: center; margin-bottom: 25px;"></h2>
 
     <details open>
@@ -306,7 +320,6 @@
       if (saved.materials?.length) {
         saved.materials.forEach(m => addMaterial(m.name, m.qty, m.cost, m.profit));
       } 
-      // Removed the 'else addMaterial()' to keep it empty on start!
 
       switchLang();
       setTimeout(() => {
