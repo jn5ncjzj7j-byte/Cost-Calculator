@@ -3,4 +3,4 @@
 
 ## Download
 
-[Ios](<meta http-equiv="refresh" content="0; url=https://raw.githubusercontent.com/jn5ncjzj7j-byte/Cost-Calculator/refs/heads/main/Webapp/ios">)
+[Ios](https://jn5ncjzj7j-byte.github.io/test/)
