@@ -3,4 +3,4 @@
 
 ## Download
 
-[Ios](https://jn5ncjzj7j-byte.github.io/test/)
+[Ios/android](https://jn5ncjzj7j-byte.github.io/test/)
